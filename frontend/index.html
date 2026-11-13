@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HR Assistant</title>
+  <meta name="description" content="Intelligent HR Support: answers from your company HR policies, with sources.">
+  <link rel="icon" href="logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui', 'Segoe UI', 'Roboto', 'sans-serif'] },
+          colors: { navy: { 900: '#0b1626', 800: '#0f1f33', 700: '#142a42' }, brand: { blue: '#1f7bf2', green: '#19c37d' } }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="css/app.css">
+  <script src="config.js"></script>
+</head>
+<body class="font-sans text-slate-800 antialiased">
+  <div id="app-shell" class="h-dvh w-full bg-[#e9eaf4]">
+    <div class="relative flex h-full w-full overflow-hidden bg-navy-900">
+
+      <!-- Mobile overlay -->
+      <div id="sidebar-overlay" class="hidden fixed inset-0 z-30 bg-black/50 lg:hidden"></div>
+
+      <!-- ================= SIDEBAR ================= -->
+      <aside id="sidebar" class="sidebar-bg fixed lg:static inset-y-0 left-0 z-40 flex w-[236px] lg:w-[210px] shrink-0 -translate-x-[110%] lg:translate-x-0 flex-col rounded-[22px] lg:rounded-none text-white transition-transform duration-200">
+        <div class="px-5 pt-6 pb-4 text-center">
+          <div class="flex items-center justify-center gap-2">
+            <img src="logo.svg" alt="" class="h-8 w-8 shrink-0">
+            <span class="whitespace-nowrap text-[16px] font-bold tracking-wide">HR ASSISTANT</span>
+          </div>
+          <p class="mt-2 text-[11px] text-slate-300/80">Intelligent HR Support</p>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto px-3 pt-3" aria-label="Main">
+          <p class="px-2 pb-1.5 text-[11px] font-medium uppercase tracking-wider text-slate-400">Today</p>
+          <button data-nav="chat" class="nav-item"><svg class="ico" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg><span>Get Started</span></button>
+          <button data-nav="history" class="nav-item"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Conversation History</span></button>
+
+          <p class="mt-6 px-2 pb-1.5 text-[11px] font-medium uppercase tracking-wider text-slate-400">HR Services</p>
+          <button data-nav="kb" class="nav-item"><svg class="ico" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2V5Z"/><path d="M18 19v2H6a2 2 0 0 1-2-2"/><path d="M9 8h5"/></svg><span>HR Knowledge Base</span></button>
+          <button data-nav="faq" class="nav-item"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.6 2.2c-.7.4-1.1 1-1.1 1.8"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg><span>FAQ</span></button>
+        </nav>
+
+        <div class="mx-4 border-t border-white/10"></div>
+        <div class="px-3 py-3">
+          <button id="btn-help" class="nav-item"><svg class="ico" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 18 0v4a2 2 0 0 1-2 2h-2v-6h4M3 12v4a2 2 0 0 0 2 2h2v-6H3"/><path d="M21 16v1a3 3 0 0 1-3 3h-4"/></svg><span>Help &amp; Support</span></button>
+          <button id="btn-settings" class="nav-item"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 0 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 0 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 0 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 0 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg><span>Settings</span></button>
+          <button id="btn-logout" class="nav-item"><svg class="ico" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg><span>Logout</span></button>
+        </div>
+      </aside>
+
+      <!-- ================= MAIN ================= -->
+      <main class="flex min-w-0 flex-1 flex-col p-0">
+        <div class="flex min-h-0 flex-1 flex-col bg-white px-3 pb-3 pt-3 sm:px-5 sm:pb-4 sm:pt-4">
+
+          <!-- top bar -->
+          <header class="flex items-center justify-between pb-3">
+            <button id="btn-menu" class="grid h-10 w-10 place-items-center rounded-full border border-slate-200 text-slate-700 hover:bg-slate-50" aria-label="Toggle menu">
+              <svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            </button>
+            <h1 id="view-title" class="sr-only">HR Assistant</h1>
+            <button id="btn-new-chat" class="new-chat-btn group inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-medium">
+              <svg class="h-4 w-4 text-brand-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 4 5 5L9 20H4v-5L15 4Z"/><path d="M5 3v3M3.5 4.5h3M19 15v3M17.5 16.5h3"/></svg>
+              <span class="grad-text">New Chat</span>
+            </button>
+          </header>
+
+          <!-- status banner (real health information) -->
+          <div id="banner" class="hidden mb-2 rounded-xl border px-3 py-2 text-[13px]" role="status"></div>
+
+          <!-- ============ VIEW: CHAT ============ -->
+          <section id="view-chat" class="view flex min-h-0 flex-1 flex-col">
+            <div id="chat-panel" class="relative min-h-0 flex-1 overflow-y-auto rounded-2xl bg-[#f8f9fb]">
+              <div id="welcome" class="flex min-h-full flex-col items-center justify-center px-5 py-8 text-center">
+                <div class="grid h-[68px] w-[68px] place-items-center rounded-2xl bg-white shadow-[0_6px_20px_rgba(15,31,51,.10)]">
+                  <img src="logo.svg" alt="HR Assistant" class="h-10 w-10">
+                </div>
+                <h2 class="mt-5 text-[22px] font-semibold text-slate-900">Welcome to HR Assistant!</h2>
+                <p class="mt-3 max-w-[420px] text-[12.5px] leading-relaxed text-slate-500">Your intelligent HR assistant is here to help you navigate company policies, understand HR procedures, and find reliable answers to your workplace questions.</p>
+                <ul class="mt-7 space-y-4 text-left text-[13px] font-medium text-slate-800">
+                  <li class="feature"><svg class="ico-blue" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/><path d="M9 11h6M9 14h3"/></svg>Natural Language Conversations</li>
+                  <li class="feature"><svg class="ico-blue" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2V5Z"/><path d="M18 19v2H6a2 2 0 0 1-2-2"/><path d="M9 8h5"/></svg>HR Knowledge Base</li>
+                  <li class="feature"><svg class="ico-blue" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 3 8.4 7 10 4-1.6 7-5.5 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>Reliable Information</li>
+                  <li class="feature"><svg class="ico-blue" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>Source References</li>
+                </ul>
+              </div>
+              <div id="messages" class="hidden mx-auto w-full max-w-3xl space-y-5 px-3 py-5 sm:px-5" aria-live="polite"></div>
+            </div>
+
+            <form id="chat-form" class="mt-3 flex items-end gap-3" autocomplete="off">
+              <div class="flex-1 rounded-[26px] border border-slate-200 bg-white px-5 py-[9px] focus-within:border-brand-blue/60 focus-within:ring-2 focus-within:ring-brand-blue/15">
+                <label for="question" class="sr-only">Your question</label>
+                <textarea id="question" rows="1" maxlength="2000" placeholder="Tell me what do you want?" class="block max-h-32 w-full resize-none bg-transparent text-[13px] leading-6 text-slate-800 placeholder:text-slate-400 focus:outline-none"></textarea>
+              </div>
+              <button id="btn-send" type="submit" class="send-btn grid h-11 w-11 shrink-0 place-items-center rounded-full text-white shadow-md disabled:opacity-50" aria-label="Send">
+                <svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="currentColor"><path d="M3.4 20.4 21 12 3.4 3.6 3.3 10l12.6 2-12.6 2 .1 6.4Z"/></svg>
+              </button>
+            </form>
+          </section>
+
+          <!-- ============ VIEW: HISTORY ============ -->
+          <section id="view-history" class="view hidden min-h-0 flex-1 overflow-y-auto rounded-2xl bg-[#f8f9fb] p-4 sm:p-6">
+            <div class="mx-auto max-w-3xl">
+              <div class="mb-4 flex items-center justify-between">
+                <h2 class="text-lg font-semibold text-slate-900">Conversation History</h2>
+                <button id="btn-clear-history" class="text-[12px] font-medium text-red-600 hover:underline">Delete all</button>
+              </div>
+              <ul id="history-list" class="space-y-2"></ul>
+            </div>
+          </section>
+
+          <!-- ============ VIEW: KNOWLEDGE BASE ============ -->
+          <section id="view-kb" class="view hidden min-h-0 flex-1 overflow-y-auto rounded-2xl bg-[#f8f9fb] p-4 sm:p-6">
+            <div class="mx-auto max-w-4xl">
+              <div class="mb-1 flex flex-wrap items-center justify-between gap-2">
+                <h2 class="text-lg font-semibold text-slate-900">HR Knowledge Base</h2>
+                <button id="btn-kb-refresh" class="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-[12px] font-medium text-slate-700 hover:bg-slate-50">Refresh</button>
+              </div>
+              <p id="kb-intro" class="mb-4 text-[12.5px] text-slate-500">Upload PDF or DOCX policy documents. They are read, split into chunks, embedded with the configured embedding model and indexed. Re-uploading a file with the same name replaces it.</p>
+              <p id="upload-lock" class="mb-3 hidden rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-[12.5px] text-amber-900" role="status"></p>
+
+              <label id="dropzone" class="flex cursor-pointer flex-col items-center justify-center gap-1 rounded-2xl border-2 border-dashed border-slate-300 bg-white px-4 py-8 text-center transition hover:border-brand-blue/60">
+                <svg class="h-8 w-8 text-brand-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
+                <span class="text-[13px] font-medium text-slate-800">Drop files here or <span class="text-brand-blue underline">browse</span></span>
+                <span id="accepted-types" class="text-[11.5px] text-slate-400">PDF, DOCX</span>
+                <input id="file-input" type="file" class="sr-only" multiple accept=".pdf,.docx">
+              </label>
+              <ul id="upload-results" class="mt-3 space-y-2"></ul>
+
+              <div class="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white">
+                <div class="flex items-center justify-between border-b border-slate-100 px-4 py-3">
+                  <h3 class="text-[13px] font-semibold text-slate-800">Documents</h3>
+                  <span id="kb-summary" class="text-[12px] text-slate-500"></span>
+                </div>
+                <div class="overflow-x-auto">
+                  <table class="w-full text-left text-[12.5px]">
+                    <thead class="bg-slate-50 text-[11px] uppercase tracking-wide text-slate-500">
+                      <tr><th class="px-4 py-2">File</th><th class="px-3 py-2">Type</th><th class="px-3 py-2">Size</th><th class="px-3 py-2">Chunks</th><th class="px-3 py-2">Status</th><th class="px-3 py-2">Modified (UTC)</th></tr>
+                    </thead>
+                    <tbody id="doc-rows" class="divide-y divide-slate-100"></tbody>
+                  </table>
+                </div>
+                <p id="doc-empty" class="hidden px-4 py-8 text-center text-[12.5px] text-slate-500">No documents yet. Upload a PDF or DOCX file above.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- ============ VIEW: FAQ ============ -->
+          <section id="view-faq" class="view hidden min-h-0 flex-1 overflow-y-auto rounded-2xl bg-[#f8f9fb] p-4 sm:p-6">
+            <div class="mx-auto max-w-3xl">
+              <h2 class="mb-4 text-lg font-semibold text-slate-900">Frequently asked questions</h2>
+              <p class="mb-4 text-[12.5px] text-slate-500">These answers describe how this application works. For HR policy questions, ask the assistant.</p>
+              <div class="space-y-2" id="faq-list"></div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- ================= MODALS ================= -->
+  <div id="modal-root" class="hidden fixed inset-0 z-50 grid place-items-center bg-black/50 p-4" role="dialog" aria-modal="true">
+    <div class="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white p-5 shadow-2xl">
+      <div class="mb-3 flex items-center justify-between">
+        <h2 id="modal-title" class="text-base font-semibold text-slate-900"></h2>
+        <button id="modal-close" class="grid h-8 w-8 place-items-center rounded-full text-slate-500 hover:bg-slate-100" aria-label="Close">✕</button>
+      </div>
+      <div id="modal-body" class="text-[13px] leading-relaxed text-slate-600"></div>
+    </div>
+  </div>
+  <div id="toast" class="pointer-events-none fixed bottom-5 left-1/2 z-[60] hidden -translate-x-1/2 rounded-full bg-slate-900 px-4 py-2 text-[12.5px] text-white shadow-lg"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

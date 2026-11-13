@@ -1,0 +1,21 @@
+# Tested with Python 3.11 and 3.13. Install: pip install -r requirements.txt
+langchain-core>=1.0,<2
+langchain-text-splitters>=1.0,<2
+langchain-chroma>=1.0,<2
+chromadb>=1.0,<2
+sentence-transformers>=3.0,<7
+groq>=1.0,<2
+pymupdf>=1.24
+docx2txt>=0.8,<1
+python-dotenv>=1.0,<2
+pydantic>=2.7,<3
+
+# Web API (Week 2)
+fastapi>=0.115,<1
+uvicorn>=0.30,<1
+python-multipart>=0.0.9
+httpx>=0.27,<1
+
+# Needed only for the tests and for regenerating the demo corpus
+pytest>=8,<10
+python-docx>=1.1,<2

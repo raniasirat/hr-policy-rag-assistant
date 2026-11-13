@@ -1,0 +1,9 @@
+# Static site: publish this folder as-is. Set HR_API_BASE in config.js to your API's HTTPS URL.
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "no-referrer"
